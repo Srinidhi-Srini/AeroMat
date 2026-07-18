@@ -1,4 +1,4 @@
-name,density,yield_strength,ultimate_tensile_strength,elastic_modulus,thermal_conductivity,max_service_temp
+material,density,yield_strength,ultimate_tensile_strength,elastic_modulus,thermal_conductivity,max_service_temp
 Al 2024-T3,2.78,345,483,73.1,121,125
 Al 2014-T3,2.80,240,405,72.4,134,125
 Al 6061-T6,2.70,276,310,68.9,167,150
