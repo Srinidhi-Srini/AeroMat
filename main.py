@@ -4,6 +4,8 @@ import pandas as pd
 from typing import NamedTuple
 
 df = pd.read_csv("materials.csv")
+df["specific_strength"] = df["yield_strength"] / df["density"]
+df["specific_stiffness"] = df["elastic_modulus"] / df["density"]
 
 class MaterialProp(NamedTuple):
     material: str
@@ -13,6 +15,8 @@ class MaterialProp(NamedTuple):
     elastic_modulus: float
     thermal_conductivity: float
     max_service_temp: float
+    specific_strength: float
+    specific_stiffness: float
 
 materials_list: dict[str, MaterialProp] = {}
 for index, row in df.iterrows():
@@ -24,7 +28,9 @@ for index, row in df.iterrows():
         ultimate_tensile_strength = float(row['ultimate_tensile_strength']),
         elastic_modulus = float(row['elastic_modulus']),
         thermal_conductivity = float(row['thermal_conductivity']),
-        max_service_temp = float(row['max_service_temp'])
+        max_service_temp = float(row['max_service_temp']),
+        specific_strength = float(row['specific_strength']),
+        specific_stiffness = float(row['specific_stiffness'])
     )
 
 
@@ -44,6 +50,7 @@ def user_material():
         print("Invalid input. Please enter a number.")
         return
 
+
     def difference(item):
         prop = item[1]
         diff_density = abs(prop.density - target_density)/(target_density)     
@@ -52,7 +59,8 @@ def user_material():
         diff_elastic_modulus = abs(prop.elastic_modulus - target_elastic_modulus)/(target_elastic_modulus)
         diff_thermal_conductivity = abs(prop.thermal_conductivity - target_thermal_conductivity) / (target_thermal_conductivity)
         diff_max_service_temp = abs(prop.max_service_temp - target_max_service_temp) / (target_max_service_temp)
-        return diff_density + diff_yield_strength + diff_ultimate_tensile_strength + diff_elastic_modulus + diff_thermal_conductivity + diff_max_service_temp
+        
+        return diff_density + diff_yield_strength + diff_ultimate_tensile_strength + diff_elastic_modulus + diff_thermal_conductivity + diff_max_service_temp 
 
     best_match = sorted(materials_list.items(), key = difference)
     print("="*50)
@@ -62,15 +70,17 @@ def user_material():
     print("="*50)
     for rank, (material, prop) in enumerate(best_match, 1):
         score = difference((material, prop))
-        similarity = max(0.0, (1.0 - (score / 6.0)) * 100)
+        similarity = max(0.0, (1.0 - (score / 8.0)) * 100)
         if similarity >= target_similarity: 
             print(f"{rank}. {material} ({similarity:.1f}% Match)")
             print(f"Density: {prop.density} g/cm^3")
             print(f"Yield Strength: {prop.yield_strength} MPa")
             print(f"Ultimate Tensile Strength: {prop.ultimate_tensile_strength} MPa")
             print(f"Elastic Modulus: {prop.elastic_modulus} GPa")
-            print(f"Thermal Conductivity: {prop.thermal_conductivity} W/m-K")
+            print(f"Thermal Conductivity: {prop.thermal_conductivity} W/m*K")
             print(f"Maximum Service Temperature: {prop.max_service_temp} C")
+            print(f"Specific Strength: {prop.specific_strength:.1f} N*m/kg")
+            print(f"Specific Stiffness: {prop.specific_stiffness:.1f} N*m/kg")
             print("="*50)
 
 
