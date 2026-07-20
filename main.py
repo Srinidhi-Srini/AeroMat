@@ -2,6 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import pandas as pd
+import streamlit as st
+
+st.set_page_config(page_title="AeroMat", layout="wide")
+st.title("AeroMat — Aerospace Material Selection Tool")
 
 # Loading materials databsae
 df = pd.read_csv("materials.csv")
