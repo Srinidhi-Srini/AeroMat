@@ -9,8 +9,8 @@ st.title("AeroMat — Aerospace Material Selection Tool")
 
 # Loading materials databsae
 df = pd.read_csv("materials.csv")
-df["specific_strength"] = df["yield_strength"] / df["density"]
-df["specific_stiffness"] = df["elastic_modulus"] / df["density"]
+df["specific_strength"] = df["yield_strength"] / df["density"].round(1)
+df["specific_stiffness"] = df["elastic_modulus"] / df["density"].round(1)
 
 # Tabs replacing the while loop menu
 tab1, tab2, tab3 = st.tabs(["Materials Database", "Match by Target", "Filter & Rank"])
@@ -28,9 +28,9 @@ with tab2:
     col1, col2 = st.columns(2)
     with col1:
         target_density = st.number_input("Target Density (g/cm³)", min_value=0.1, max_value=20.0, value=4.0, step=0.1)
-        target_yield_strength = st.number_input("Target Yield Strength (MPa)", min_value=0, max_value=2000, value=500, step=10)
+        target_yield_strength = st.number_input("Target Yield Strength (MPa)", min_value=0, max_value=2000, value=300, step=10)
     with col2:
-        target_max_service_temp = st.number_input("Target Max Service Temp (°C)", min_value=0, max_value=1500, value=300, step=10)
+        target_max_service_temp = st.number_input("Target Maximum Service Temp (°C)", min_value=0, max_value=1500, value=100, step=10)
         target_similarity = st.slider("Minimum Similarity Score (%)", min_value=0, max_value=100, value=50)
  
     def difference(row):
@@ -56,18 +56,21 @@ with tab2:
             results1[display_cols].rename(columns={
                 'material': 'Material',
                 'density': 'Density (g/cm³)',
-                'yield_strength': 'Yield Str. (MPa)',
-                'ultimate_tensile_strength': 'UTS (MPa)',
-                'elastic_modulus': 'E-Mod (GPa)',
-                'thermal_conductivity': 'Therm. Cond. (W/m·K)',
-                'max_service_temp': 'Max Temp (°C)',
-                'specific_strength': 'Sp. Strength',
-                'specific_stiffness': 'Sp. Stiffness',
+                'yield_strength': 'Yield Strength. (MPa)',
+                'ultimate_tensile_strength': 'Ultimate Tensile Strength (MPa)',
+                'elastic_modulus': 'Elastic Modulus (GPa)',
+                'thermal_conductivity': 'Thermal Conductivity (W/m·K)',
+                'max_service_temp': 'Maximum Service Temperature (°C)',
+                'specific_strength': 'Specific Strength',
+                'specific_stiffness': 'Specific Stiffness',
                 'similarity': 'Similarity (%)'
             }).style.format({
+                'Density (g/cm³)': '{:.1f}',
+                'Elastic Modulus (GPa)': '{:.1f}',
+                'Thermal Conductivity (W/m·K)':'{:.1f}',
                 'Similarity (%)': '{:.1f}',
-                'Sp. Strength': '{:.1f}',
-                'Sp. Stiffness': '{:.1f}'
+                'Specific Strength': '{:.1f}',
+                'Specific Stiffness': '{:.1f}'
             }),
             use_container_width=True, hide_index=True
         )
@@ -143,15 +146,22 @@ with tab3:
             sorted_df2[display_cols2].rename(columns={
                 'material': 'Material',
                 'density': 'Density (g/cm³)',
-                'yield_strength': 'Yield Str. (MPa)',
-                'max_service_temp': 'Max Temp (°C)',
-                'specific_strength': 'Sp. Strength',
-                'specific_stiffness': 'Sp. Stiffness',
+                'yield_strength': 'Yield Strength. (MPa)',
+                'ultimate_tensile_strength': 'Ultimate Tensile Strength (MPa)',
+                'elastic_modulus': 'Elastic Modulus (GPa)',
+                'thermal_conductivity': 'Thermal Conductivity (W/m·K)',
+                'max_service_temp': 'Maximum Service Temperature (°C)',
+                'specific_strength': 'Specific Strength',
+                'specific_stiffness': 'Specific Stiffness',
                 'score': 'Score'
             }).style.format({
                 'Score': '{:.3f}',
-                'Sp. Strength': '{:.1f}',
-                'Sp. Stiffness': '{:.1f}'
+                'Density (g/cm³)': '{:.1f}',
+                'Elastic Modulus (GPa)': '{:.1f}',
+                'Thermal Conductivity (W/m·K)':'{:.1f}',
+                'Similarity (%)': '{:.1f}',
+                'Specific Strength': '{:.1f}',
+                'Specific Stiffness': '{:.1f}'
             }),
             use_container_width=True, hide_index=True
         )
