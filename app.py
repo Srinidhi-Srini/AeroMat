@@ -140,8 +140,9 @@ with tab3:
  
         st.success(f"{len(filtered_df)} material(s) matched. Ranked by weighted performance score.")
  
-        display_cols2 = ['material', 'density', 'yield_strength', 'max_service_temp',
-                         'specific_strength', 'specific_stiffness', 'score']
+        display_cols2 = ['material', 'density', 'yield_strength', 'ultimate_tensile_strength',
+                        'elastic_modulus', 'thermal_conductivity', 'max_service_temp',
+                        'specific_strength', 'specific_stiffness', 'score']
         st.dataframe(
             sorted_df2[display_cols2].rename(columns={
                 'material': 'Material',
