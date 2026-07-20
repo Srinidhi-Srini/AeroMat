@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import pandas as pd
-import mplcursors
 
 # Loading materials databsae
 df = pd.read_csv("materials.csv")
@@ -177,24 +176,13 @@ def user_material_ver2():
         y_axis_2 = ashby_y2
         axes[1].scatter(x_axis_2, y_axis_2, color="grey", s=100, alpha = 0.6)
         axes[1].scatter(x_axis_1, y_axis_1, color="blue", s=100, alpha=0.6)
-        axes[1].set_title(f"{ashby_type} - Density")
+        axes[1].set_title(f"{ashby_type} - Density (g/cm^3)")
         axes[1].set_xlabel('Density (g/cm^3)')
         axes[1].set_ylabel(ashby_type)
         
         chosen_column = y_axis_2.name
 
         scatter_all = axes[1].scatter(x_axis_2, y_axis_2, color="grey", s=100, alpha=0.4)
-
-        cursor = mplcursors.cursor(scatter_all, hover=True)
-        @cursor.connect("add")
-        def on_add(sel):
-            row = df.iloc[sel.index]
-            sel.annotation.set_text(
-            f"{row['material']}\n"
-            f"Density: {row['density']} g/cm³\n"
-            f"{ashby_type}: {row[chosen_column]:.1f}"
-            )
-            sel.annotation.get_bbox_patch().set(fc="white", alpha=0.8) 
 
         for _, row in sorted_df.iterrows():
             axes[1].annotate(
@@ -205,6 +193,17 @@ def user_material_ver2():
             xytext=(8, 4),
             textcoords='offset points',
             color='blue'
+            )
+        
+        for _, row in df.iterrows():
+            axes[1].annotate(
+            row['material'],
+            (row['density'], row[chosen_column]),
+            fontsize=6,
+            ha='left',
+            xytext=(8, 4),
+            textcoords='offset points',
+            color='grey'
             )
         
         legend_elements = [
