@@ -56,21 +56,21 @@ with tab2:
             results1[display_cols].rename(columns={
                 'material': 'Material',
                 'density': 'Density (g/cm³)',
-                'yield_strength': 'Yield Strength. (MPa)',
-                'ultimate_tensile_strength': 'Ultimate Tensile Strength (MPa)',
+                'yield_strength': 'Yield Str. (MPa)',
+                'ultimate_tensile_strength': 'UTS (MPa)',
                 'elastic_modulus': 'Elastic Modulus (GPa)',
-                'thermal_conductivity': 'Thermal Conductivity (W/m·K)',
-                'max_service_temp': 'Maximum Service Temperature (°C)',
-                'specific_strength': 'Specific Strength',
-                'specific_stiffness': 'Specific Stiffness',
+                'thermal_conductivity': 'Thermal Cond. (W/m·K)',
+                'max_service_temp': 'Max Service Temp. (°C)',
+                'specific_strength': 'Sp. Strength',
+                'specific_stiffness': 'Sp. Stiffness',
                 'similarity': 'Similarity (%)'
             }).style.format({
                 'Density (g/cm³)': '{:.1f}',
                 'Elastic Modulus (GPa)': '{:.1f}',
-                'Thermal Conductivity (W/m·K)':'{:.1f}',
+                'Thermal Cond. (W/m·K)':'{:.1f}',
                 'Similarity (%)': '{:.1f}',
-                'Specific Strength': '{:.1f}',
-                'Specific Stiffness': '{:.1f}'
+                'Sp. Strength': '{:.1f}',
+                'Sp. Stiffness': '{:.1f}'
             }),
             use_container_width=True, hide_index=True
         )
@@ -146,22 +146,22 @@ with tab3:
             sorted_df2[display_cols2].rename(columns={
                 'material': 'Material',
                 'density': 'Density (g/cm³)',
-                'yield_strength': 'Yield Strength. (MPa)',
-                'ultimate_tensile_strength': 'Ultimate Tensile Strength (MPa)',
+                'yield_strength': 'Yield Str. (MPa)',
+                'ultimate_tensile_strength': 'UTS (MPa)',
                 'elastic_modulus': 'Elastic Modulus (GPa)',
-                'thermal_conductivity': 'Thermal Conductivity (W/m·K)',
-                'max_service_temp': 'Maximum Service Temperature (°C)',
-                'specific_strength': 'Specific Strength',
-                'specific_stiffness': 'Specific Stiffness',
+                'thermal_conductivity': 'Thermal Cond. (W/m·K)',
+                'max_service_temp': 'Max Service Temp. (°C)',
+                'specific_strength': 'Sp. Strength',
+                'specific_stiffness': 'Sp. Stiffness',
                 'score': 'Score'
             }).style.format({
                 'Score': '{:.3f}',
                 'Density (g/cm³)': '{:.1f}',
                 'Elastic Modulus (GPa)': '{:.1f}',
-                'Thermal Conductivity (W/m·K)':'{:.1f}',
+                'Thermal Cond. (W/m·K)':'{:.1f}',
                 'Similarity (%)': '{:.1f}',
-                'Specific Strength': '{:.1f}',
-                'Specific Stiffness': '{:.1f}'
+                'Sp. Strength': '{:.1f}',
+                'Sp. Stiffness': '{:.1f}'
             }),
             use_container_width=True, hide_index=True
         )
