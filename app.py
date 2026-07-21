@@ -44,7 +44,7 @@ with tab1:
         st.warning("No materials found above your similarity threshold. Try lowering the minimum similarity score.")
     else:
         st.success(f"{len(results1)} material(s) found above {target_similarity}% similarity.")
-        display_cols = ['material', 'density', 'yield_strength', 'ultimate_tensile_strength',
+        display_cols = ['name', 'density', 'yield_strength', 'ultimate_tensile_strength',
                         'elastic_modulus', 'thermal_conductivity', 'max_service_temp',
                         'specific_strength', 'specific_stiffness', 'similarity']
         st.dataframe(
