@@ -217,10 +217,10 @@ with tab2:
             zorder=3
         )
 
-        cbar = figure.colorbar(scatter, ax=axes[1], pad=0.02)
-        cbar.set_label('Score', color='white', fontsize=8)
-        cbar.ax.yaxis.set_tick_params(color='white')
-        plt.setp(cbar.ax.yaxis.get_ticklabels(), color='white', fontsize=8)
+        # cbar = figure.colorbar(scatter, ax=axes[1], pad=0.02)
+        # cbar.set_label('Score', color='white', fontsize=8)
+        # cbar.ax.yaxis.set_tick_params(color='white')
+        # plt.setp(cbar.ax.yaxis.get_ticklabels(), color='white', fontsize=8)
 
         for _, row in sorted_df2.iterrows():
             axes[1].annotate(
