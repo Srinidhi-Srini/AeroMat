@@ -216,7 +216,7 @@ with tab3:
     # All materials — gray
     axes[1].scatter(
         df['density'], df[chosen_column],
-        olor='#555555', s=60, alpha=0.5, zorder=2
+        color='#555555', s=60, alpha=0.5, zorder=2
         )
 
     # Matched materials 
