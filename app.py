@@ -167,41 +167,107 @@ with tab3:
             use_container_width=True, hide_index=True
         )
  
-        # Charts
-        figure, axes = plt.subplots(1, 2, figsize=(12, 5))
- 
-        # Bar chart
-        axes[0].barh(sorted_df2['material'], sorted_df2['score'], color='steelblue')
-        axes[0].invert_yaxis()
-        axes[0].set_title("Matched Materials — Performance Score")
-        axes[0].set_xlabel("Score (0–1)")
-        axes[0].set_ylabel("Material")
-        axes[0].set_xlim(0, 1)
- 
-        # Ashby chart
-        axes[1].scatter(df['density'], df[chosen_column], color='grey', s=100, alpha=0.4)
-        axes[1].scatter(sorted_df2['density'], sorted_df2[chosen_column], color='steelblue', s=120, alpha=0.8)
- 
-        for _, row in sorted_df2.iterrows():
-            axes[1].annotate(
-                row['material'],
-                (row['density'], row[chosen_column]),
-                fontsize=6, ha='left',
-                xytext=(6, 3), textcoords='offset points',
-                color='steelblue', fontweight='bold'
+    # Charts
+    plt.style.use('seaborn-v0_8-whitegrid')
+
+    figure, axes = plt.subplots(1, 2, figsize=(14, 6))
+    figure.patch.set_facecolor('#0e1117')  # match Streamlit dark background
+
+    for ax in axes:
+        ax.set_facecolor('#0e1117')
+        ax.tick_params(colors='white', labelsize=9)
+        ax.xaxis.label.set_color('white')
+        ax.yaxis.label.set_color('white')
+        ax.title.set_color('white')
+        for spine in ax.spines.values():
+            spine.set_edgecolor('#333333')
+
+    # Bar chart 
+    colors = plt.cm.Blues(
+    [0.4 + 0.6 * (i / max(len(sorted_df2) - 1, 1)) 
+    for i in range(len(sorted_df2) - 1, -1, -1)]
+    )
+    bars = axes[0].barh(
+        sorted_df2['material'],
+        sorted_df2['score'],
+        color=colors,
+        edgecolor='none',
+        height=0.6
+        )
+    
+    axes[0].invert_yaxis()
+    axes[0].set_title("Performance Score", fontsize=12, fontweight='bold', pad=12)
+    axes[0].set_xlabel("Score (0–1)", fontsize=10)
+    axes[0].set_xlim(0, 1.15)
+    axes[0].grid(True, axis='x', alpha=0.15, color='white')
+    axes[0].grid(False, axis='y')
+
+    # Add score labels at end of each bar
+    for bar, (_, row) in zip(bars, sorted_df2.iterrows()):
+        axes[0].text(
+            bar.get_width() + 0.02,
+            bar.get_y() + bar.get_height() / 2,
+            f"{row['score']:.3f}",
+            va='center', ha='left',
+            fontsize=8, color='white'
             )
- 
-        legend_elements = [
-            Line2D([0], [0], marker='o', color='w', markerfacecolor='steelblue', markersize=8, label='Matched'),
-            Line2D([0], [0], marker='o', color='w', markerfacecolor='grey', markersize=8, alpha=0.4, label='All materials')
-        ]
-        axes[1].legend(handles=legend_elements, fontsize=8)
-        axes[1].set_title(f"{ashby_prop} vs Density")
-        axes[1].set_xlabel("Density (g/cm³)")
-        axes[1].set_ylabel(ashby_prop)
-        axes[1].grid(True, alpha=0.2)
- 
-        plt.tight_layout()
-        st.pyplot(figure)
-        plt.close(figure)
+
+    # Ashby chart
+    # All materials — gray
+    axes[1].scatter(
+        df['density'], df[chosen_column],
+        olor='#555555', s=60, alpha=0.5, zorder=2
+        )
+
+    # Matched materials 
+    scatter = axes[1].scatter(
+        sorted_df2['density'], sorted_df2[chosen_column],
+        c=sorted_df2['score'],
+        cmap='Blues',
+        vmin=0, vmax=1,
+        s=150, alpha=0.95,
+        edgecolors='white', linewidths=0.5,
+        zorder=3
+        )
+
+    # Colorbar for matched points
+    cbar = figure.colorbar(scatter, ax=axes[1], pad=0.02)
+    cbar.set_label('Score', color='white', fontsize=8)
+    cbar.ax.yaxis.set_tick_params(color='white')
+    plt.setp(cbar.ax.yaxis.get_ticklabels(), color='white', fontsize=8)
+
+    # Labels for matched materials only
+    for _, row in sorted_df2.iterrows():
+        axes[1].annotate(
+            row['material'],
+            (row['density'], row[chosen_column]),
+            fontsize=7, ha='left',
+            xytext=(7, 4), textcoords='offset points',
+            color='white', fontweight='bold',
+            bbox=dict(
+                boxstyle='round,pad=0.2',
+                facecolor='#1a1a2e',
+                edgecolor='none',
+                alpha=0.7
+            )
+        )
+
+    axes[1].set_title(f"{ashby_prop} vs Density", fontsize=12, fontweight='bold', pad=12)
+    axes[1].set_xlabel("Density (g/cm³)", fontsize=10)
+    axes[1].set_ylabel(ashby_prop, fontsize=10)
+    axes[1].grid(True, alpha=0.1, color='white')
+
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#555555',
+            markersize=7, alpha=0.5, label='All materials'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='steelblue',
+            markersize=7, label='Matched materials')
+    ]
+    axes[1].legend(handles=legend_elements, fontsize=8,
+                facecolor='#1a1a2e', edgecolor='#333333',
+                labelcolor='white')
+
+    plt.tight_layout(pad=2.0)
+    st.pyplot(figure)
+    plt.close(figure)
  
