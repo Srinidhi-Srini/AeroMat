@@ -78,7 +78,7 @@ with tab2:
     with col1:
         max_density = st.slider("Maximum Density (g/cm³)", 1.0, 25.0, 5.0, 0.1)
         min_yield_strength = st.slider("Minimum Yield Strength (MPa)", 0, 5000, 300, 25)
-        min_service_temp = st.slider("Minimum Service Temperature (°C)", 0, 3000, 150, 25)
+        min_service_temp = st.slider("Minimum Service Temperature (°C)", 0, 1500, 150, 25)
         all_families = sorted(df['family'].unique().tolist())
         selected_families = st.multiselect(
             "Filter by Material Family",
@@ -174,7 +174,7 @@ with tab2:
             use_container_width=True, hide_index=True
         )
 
-        # Charts — inside else block so sorted_df2 always exists
+        # Charts
         plt.style.use('seaborn-v0_8-whitegrid')
         figure, axes = plt.subplots(1, 2, figsize=(14, 6))
         figure.patch.set_facecolor('#0e1117')
@@ -229,11 +229,6 @@ with tab2:
             zorder=3
         )
 
-        # cbar = figure.colorbar(scatter, ax=axes[1], pad=0.02)
-        # cbar.set_label('Score', color='white', fontsize=8)
-        # cbar.ax.yaxis.set_tick_params(color='white')
-        # plt.setp(cbar.ax.yaxis.get_ticklabels(), color='white', fontsize=8)
-
         for _, row in sorted_df2.iterrows():
             axes[1].annotate(
                 row['name'],
@@ -264,7 +259,6 @@ with tab2:
         plt.tight_layout(pad=2.0)
         st.pyplot(figure)
         plt.close(figure)
-
 
 # TAB 3 — Full database
 with tab3:
