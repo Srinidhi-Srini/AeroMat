@@ -46,7 +46,7 @@ with tab1:
         st.success(f"{len(results1)} material(s) found above {target_similarity}% similarity.")
         display_cols = ['name', 'density', 'yield_strength', 'ultimate_tensile_strength',
                         'elastic_modulus', 'thermal_conductivity', 'max_service_temp',
-                        'specific_strength', 'specific_stiffness', 'family','similarity']
+                        'specific_strength', 'specific_stiffness', 'similarity']
         st.dataframe(
             results1[display_cols].rename(columns={
                 'name': 'Material',
