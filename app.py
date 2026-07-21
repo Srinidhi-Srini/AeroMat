@@ -49,7 +49,8 @@ with tab1:
                         'specific_strength', 'specific_stiffness', 'similarity']
         st.dataframe(
             results1[display_cols].rename(columns={
-                'material': 'Material',
+                'name': 'Material',
+                'family':'Family',
                 'density': 'Density (g/cm³)',
                 'yield_strength': 'Yield Str. (MPa)',
                 'ultimate_tensile_strength': 'UTS (MPa)',
@@ -140,7 +141,8 @@ with tab2:
                         'specific_strength', 'specific_stiffness', 'score']
         st.dataframe(
             sorted_df2[display_cols2].rename(columns={
-                'material': 'Material',
+                'name': 'Material',
+                'family': 'Family',
                 'density': 'Density (g/cm³)',
                 'yield_strength': 'Yield Str. (MPa)',
                 'ultimate_tensile_strength': 'UTS (MPa)',
