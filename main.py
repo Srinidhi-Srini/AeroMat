@@ -30,9 +30,9 @@ def user_material_ver1():
 
     # calculates the absolute value of differences and then returns the sum for a score
     def difference(row):
-        diff_density = min(abs(row['density'] - target_density) / target_density, 1)
-        diff_yield_strength = min(abs(row['yield_strength'] - target_yield_strength) / target_yield_strength, 1)
-        diff_max_service_temp = min(abs(row['max_service_temp'] - target_max_service_temp) / target_max_service_temp, 1)
+        diff_density = min(abs(row['density'] - target_density) / target_density, 1.0)
+        diff_yield_strength = min(abs(row['yield_strength'] - target_yield_strength) / target_yield_strength, 1.0)
+        diff_max_service_temp = min(abs(row['max_service_temp'] - target_max_service_temp) / target_max_service_temp, 1.0)
         return diff_density + diff_yield_strength + diff_max_service_temp
 
     scored_df = df.copy()
