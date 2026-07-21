@@ -230,7 +230,7 @@ with tab2:
     # Labels for matched materials only
     for _, row in sorted_df2.iterrows():
         axes[1].annotate(
-            row['material'],
+            row['name'],
             (row['density'], row[chosen_column]),
             fontsize=7, ha='left',
             xytext=(7, 4), textcoords='offset points',
