@@ -79,6 +79,17 @@ with tab2:
         max_density = st.slider("Maximum Density (g/cm³)", 1.0, 25.0, 5.0, 0.1)
         min_yield_strength = st.slider("Minimum Yield Strength (MPa)", 0, 5000, 300, 25)
         min_service_temp = st.slider("Minimum Service Temperature (°C)", 0, 3000, 150, 25)
+        all_families = sorted(df['family'].unique().tolist())
+        selected_families = st.multiselect(
+            "Filter by Material Family",
+            options = all_families,
+            default = all_families
+        )
+
+    if not selected_families:
+        st.warning("Select at least one material family.")
+        st.stop()
+
     with col2:
         st.markdown("**Scoring weights**")
         w_ss = st.slider("Specific Strength weight", 0, 10, 5)
@@ -107,7 +118,8 @@ with tab2:
     filtered_df = df[
         (df['density'] <= max_density) &
         (df['yield_strength'] >= min_yield_strength) &
-        (df['max_service_temp'] >= min_service_temp)
+        (df['max_service_temp'] >= min_service_temp) &
+        (df['family'].isin(selected_families))
     ].copy()
 
     if filtered_df.empty:
