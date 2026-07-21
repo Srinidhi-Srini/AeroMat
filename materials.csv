@@ -1,11 +1,26 @@
-material,density,yield_strength,ultimate_tensile_strength,elastic_modulus,thermal_conductivity,max_service_temp
-Al 2024-T3,2.78,345,483,73.1,121,125
-Al 2014-T3,2.80,240,405,72.4,134,125
-Al 6061-T6,2.70,276,310,68.9,167,150
-Al 7075-T6,2.81,503,572,71.7,130,125
-Ti-6Al-4V,4.43,880,950,113.8,6.7,315
-Ti-3Al-2.5V,4.48,500,620,100.0,8.3,260
-Ti-15V-3Cr-3Sn-3Al,4.78,780,825,82.0,8.65,315
-15-5PH Steel,7.8,860,1000,200,17.8,370
-4130 Steel,7.85,435,670,205,42.7,370
-4340 Steel,7.85,470,745,192,44.5,370
+name,density,yield_strength,ultimate_tensile_strength,elastic_modulus,thermal_conductivity,max_service_temp,family
+Al 2024-T3,2.78,345,483,73.1,121,125,Aluminum
+Al 2014-T3,2.80,240,405,72.4,134,125,Aluminum
+Al 6061-T6,2.70,276,310,68.9,167,150,Aluminum
+Al 7068-T6511,2.85,683,710,73.1,190,125,Aluminum
+Al 7075-T6,2.81,503,572,71.7,130,125,Aluminum
+Ti-6Al-4V,4.43,880,950,113.8,6.7,315,Titanium
+Ti-6242,4.54,990,1010,120,7.10,425,Titanium
+Ti-3Al-2.5V,4.48,500,620,100.0,8.3,260,Titanium
+Ti-15V-3Cr-3Sn-3Al,4.78,780,825,82.0,8.65,315,Titanium
+Ti Grade 2,4.51,275,345,103,16.4,260,Titanium
+15-5PH Steel,7.80,860,1000,200,17.8,370,Steel
+17-4PH Steel,7.80,1379,1448,196,17.9,300,Steel
+4130 Steel,7.85,435,670,205,42.7,370,Steel
+4340 Steel,7.85,470,745,192,44.5,370,Steel
+AerMet 100,7.89,1700,1980,194,170,400,Steel
+Inconel 718,8.19,1100,1375,205,11.4,700,Super Alloy
+Inconel 625,8.44,460,880,205,9.8,980,Super Alloy
+Waspaloy,8.19,800,1275,211,11,650,Super Alloy
+Haynes 230,8.97,275,485,211,8.9,1100,Super Alloy
+Hastelloy X,8.22,380,765,205,9.1,1100,Super Alloy
+Kevlar 49,1.44,3000,3000,112,0.04,150,Composite
+E-Glass Fiber,2.54,3450,3450,72.4,1.3,500,Composite
+S-Glass Fiber,2.46,4890,4890,86.9,1.45,700,Composite
+Toray T700S Carbon Fiber,1.80,4900,4900,230,9.62,400,Composite
+Toray M40J Carbon Fiber,1.77,4400,4400,377,66.9,400,Composite
