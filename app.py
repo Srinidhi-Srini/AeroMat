@@ -46,7 +46,7 @@ with tab1:
         st.success(f"{len(results1)} material(s) found above {target_similarity}% similarity.")
         display_cols = ['name', 'density', 'yield_strength', 'ultimate_tensile_strength',
                         'elastic_modulus', 'thermal_conductivity', 'max_service_temp',
-                        'specific_strength', 'specific_stiffness', 'similarity']
+                        'specific_strength', 'specific_stiffness', 'family','similarity']
         st.dataframe(
             results1[display_cols].rename(columns={
                 'name': 'Material',
@@ -136,7 +136,7 @@ with tab2:
  
         st.success(f"{len(filtered_df)} material(s) matched. Ranked by weighted performance score.")
  
-        display_cols2 = ['material', 'density', 'yield_strength', 'ultimate_tensile_strength',
+        display_cols2 = ['name', 'density', 'yield_strength', 'ultimate_tensile_strength',
                         'elastic_modulus', 'thermal_conductivity', 'max_service_temp',
                         'specific_strength', 'specific_stiffness', 'score']
         st.dataframe(
@@ -185,7 +185,7 @@ with tab2:
     for i in range(len(sorted_df2) - 1, -1, -1)]
     )
     bars = axes[0].barh(
-        sorted_df2['material'],
+        sorted_df2['name'],
         sorted_df2['score'],
         color=colors,
         edgecolor='none',
