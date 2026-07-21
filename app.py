@@ -13,15 +13,10 @@ df["specific_strength"] = df["yield_strength"] / df["density"].round(1)
 df["specific_stiffness"] = df["elastic_modulus"] / df["density"].round(1)
 
 # Tabs replacing the while loop menu
-tab1, tab2, tab3 = st.tabs(["Materials Database", "Match by Target", "Filter & Rank"])
-
-# Shows the materials database
-with tab1:
-    st.subheader("Materials Database")
-    st.dataframe(df, use_container_width=True, hide_index=True)
+tab1, tab2, tab3 = st.tabs(["Match by Target", "Filter & Rank", "Materials Database"])
 
 # Sorts material by proximity to desired properties
-with tab2:
+with tab1:
     st.subheader("Match by Target Properties")
     st.caption("Find materials closest to your target values across density, yield strength, and service temperature.")
  
@@ -76,7 +71,7 @@ with tab2:
         )
 
 # Sorts materials by filtering based on desired quantity
-with tab3:
+with tab2:
     st.subheader("Filter & Rank by Requirements")
     st.caption("Set minimum requirements and rank surviving materials by weighted performance score.")
  
@@ -265,3 +260,7 @@ with tab3:
     st.pyplot(figure)
     plt.close(figure)
  
+# Shows the materials database
+with tab3:
+    st.subheader("Materials Database")
+    st.dataframe(df, use_container_width=True, hide_index=True)
