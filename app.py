@@ -79,8 +79,8 @@ with tab2:
     col1, col2 = st.columns(2)
     with col1:
         max_density = st.slider("Maximum Density (g/cm³)", 1.0, 10.0, 5.0, 0.1)
-        min_yield_strength = st.slider("Minimum Yield Strength (MPa)", 0, 1500, 300, 25)
-        min_service_temp = st.slider("Minimum Service Temperature (°C)", 0, 1000, 150, 25)
+        min_yield_strength = st.slider("Minimum Yield Strength (MPa)", 0, 5000, 300, 25)
+        min_service_temp = st.slider("Minimum Service Temperature (°C)", 0, 3000, 150, 25)
     with col2:
         st.markdown("**Scoring weights**")
         w_ss = st.slider("Specific Strength weight", 0, 10, 5)
