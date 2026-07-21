@@ -23,9 +23,9 @@ with tab1:
     col1, col2 = st.columns(2)
     with col1:
         target_density = st.number_input("Target Density (g/cm³)", min_value=0.1, max_value=20.0, value=4.0, step=0.1)
-        target_yield_strength = st.number_input("Target Yield Strength (MPa)", min_value=0, max_value=2000, value=300, step=10)
+        target_yield_strength = st.number_input("Target Yield Strength (MPa)", min_value=0, max_value=5000, value=300, step=10)
     with col2:
-        target_max_service_temp = st.number_input("Target Maximum Service Temp (°C)", min_value=0, max_value=1500, value=100, step=10)
+        target_max_service_temp = st.number_input("Target Maximum Service Temp (°C)", min_value=0, max_value=3000, value=100, step=10)
         target_similarity = st.slider("Minimum Similarity Score (%)", min_value=0, max_value=100, value=50)
  
     def difference(row):
