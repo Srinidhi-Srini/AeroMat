@@ -9,8 +9,8 @@ st.title("AeroMat — Aerospace Material Selection Tool")
 
 # Loading materials databsae
 df = pd.read_csv("materials.csv")
-df["specific_strength"] = df["yield_strength"] / df["density"].round(1)
-df["specific_stiffness"] = df["elastic_modulus"] / df["density"].round(1)
+df["specific_strength"] = (df["yield_strength"] / df["density"]).round(1)
+df["specific_stiffness"] = (df["elastic_modulus"] / df["density"]).round(1)
 
 # Tabs replacing the while loop menu
 tab1, tab2, tab3 = st.tabs(["Match by Target", "Filter & Rank", "Materials Database"])
