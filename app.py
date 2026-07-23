@@ -217,18 +217,42 @@ with tab2:
             )
 
         # Ashby chart
-        axes[1].scatter(df['density'], df[chosen_column],
-                        color='#555555', s=60, alpha=0.5, zorder=2)
+        # family colors
+        family_colors = {
+            'Aluminum': '#4A90D9',
+            'Titanium': '#7B68EE',
+            'Steel': '#95A5A6',
+            'Superalloy': '#E74C3C',
+            'Composite': '#2ECC71',
+            'Specialty': '#F39C12'
+        }
 
-        scatter = axes[1].scatter(
-            sorted_df2['density'], sorted_df2[chosen_column],
-            c=sorted_df2['score'],
-            cmap='Blues', vmin=0, vmax=1,
-            s=150, alpha=0.95,
-            edgecolors='white', linewidths=0.5,
-            zorder=3
-        )
+        # background materials colored by family
+        for family, group in df.groupby('family'):
+            color = family_colors.get(family, '#888888')
+            axes[1].scatter(
+                group['density'],
+                group[chosen_column],
+                color=color,
+                s=60, alpha=0.4,
+                zorder=2,
+                label=family
+            )
 
+        # overlay matched materials colored by family (highlighted)
+        for family, group in sorted_df2.groupby('family'):
+            color = family_colors.get(family, '#888888')
+            axes[1].scatter(
+                group['density'],
+                group[chosen_column],
+                color=color,
+                s=150, alpha=0.95,
+                edgecolors='white',
+                linewidths=1.5,
+                zorder=3
+            )
+
+        # annotations loop
         for _, row in sorted_df2.iterrows():
             axes[1].annotate(
                 row['name'],
@@ -246,16 +270,19 @@ with tab2:
         axes[1].set_ylabel(ashby_prop, fontsize=10)
         axes[1].grid(True, alpha=0.1, color='white')
 
+        # legend
         legend_elements = [
-            Line2D([0], [0], marker='o', color='w', markerfacecolor='#555555',
-                   markersize=7, alpha=0.5, label='All materials'),
-            Line2D([0], [0], marker='o', color='w', markerfacecolor='steelblue',
-                   markersize=7, label='Matched materials')
+            Line2D([0], [0], marker='o', color='w',
+                   markerfacecolor=family_colors.get(f, '#888888'),
+                   markersize=7, label=f)
+            for f in df['family'].unique()
         ]
         axes[1].legend(handles=legend_elements, fontsize=8,
                        facecolor='#1a1a2e', edgecolor='#333333',
-                       labelcolor='white')
+                       labelcolor='white', title='Family',
+                       title_fontsize=8)
 
+       
         plt.tight_layout(pad=2.0)
         st.pyplot(figure)
         plt.close(figure)
