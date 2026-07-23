@@ -297,9 +297,9 @@ with tab2:
         loc='upper right'
     )
 
-plt.tight_layout(pad=2.0)
-st.pyplot(figure)
-plt.close(figure)
+    plt.tight_layout(pad=2.0)
+    st.pyplot(figure)
+    plt.close(figure)
 
 # TAB 3 — Full database
 with tab3:
