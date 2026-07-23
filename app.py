@@ -174,118 +174,132 @@ with tab2:
             use_container_width=True, hide_index=True
         )
 
-        # Charts
-        plt.style.use('seaborn-v0_8-whitegrid')
-        figure, axes = plt.subplots(1, 2, figsize=(14, 6))
-        figure.patch.set_facecolor('#0e1117')
+    # Family color map
+    family_colors = {
+        'Aluminum': '#4A90D9',
+        'Titanium': '#7B68EE',
+        'Steel': '#95A5A6',
+        'Superalloy': '#E74C3C',
+        'Composite': '#2ECC71',
+        'Specialty': '#F39C12'
+    }
 
-        for ax in axes:
-            ax.set_facecolor('#0e1117')
-            ax.tick_params(colors='white', labelsize=9)
-            ax.xaxis.label.set_color('white')
-            ax.yaxis.label.set_color('white')
-            ax.title.set_color('white')
-            for spine in ax.spines.values():
-                spine.set_edgecolor('#333333')
+    # Charts
+    plt.style.use('seaborn-v0_8-whitegrid')
+    figure, axes = plt.subplots(1, 2, figsize=(14, 6))
+    figure.patch.set_facecolor('#0e1117')
 
-        # Bar chart
-        colors = plt.cm.Blues(
-            [0.4 + 0.6 * (i / max(len(sorted_df2) - 1, 1))
-             for i in range(len(sorted_df2) - 1, -1, -1)]
+    for ax in axes:
+        ax.set_facecolor('#0e1117')
+        ax.tick_params(colors='white', labelsize=9)
+        ax.xaxis.label.set_color('white')
+        ax.yaxis.label.set_color('white')
+        ax.title.set_color('white')
+        for spine in ax.spines.values():
+            spine.set_edgecolor('#333333')
+
+    # --- Bar chart ---
+    colors = plt.cm.Blues(
+        [0.4 + 0.6 * (i / max(len(sorted_df2) - 1, 1))
+        for i in range(len(sorted_df2) - 1, -1, -1)]
+    )
+    bars = axes[0].barh(
+        sorted_df2['name'],
+        sorted_df2['score'],
+        color=colors,
+        edgecolor='none',
+        height=0.6
+    )
+    axes[0].invert_yaxis()
+    axes[0].set_title("Performance Score", fontsize=12, fontweight='bold', pad=12)
+    axes[0].set_xlabel("Score (0–1)", fontsize=10)
+    axes[0].set_xlim(0, 1.15)
+    axes[0].grid(True, axis='x', alpha=0.15, color='white')
+    axes[0].grid(False, axis='y')
+
+    for bar, (_, row) in zip(bars, sorted_df2.iterrows()):
+        axes[0].text(
+            bar.get_width() + 0.02,
+            bar.get_y() + bar.get_height() / 2,
+            f"{row['score']:.3f}",
+            va='center', ha='left',
+            fontsize=8, color='white'
         )
-        bars = axes[0].barh(
-            sorted_df2['name'],
-            sorted_df2['score'],
-            color=colors,
-            edgecolor='none',
-            height=0.6
+
+    # --- Ashby chart ---
+    # All materials colored by family — dim
+    for family, group in df.groupby('family'):
+        color = family_colors.get(family, '#888888')
+        axes[1].scatter(
+            group['density'],
+            group[chosen_column],
+            color=color,
+            s=60, alpha=0.3,
+            zorder=2
         )
-        axes[0].invert_yaxis()
-        axes[0].set_title("Performance Score", fontsize=12, fontweight='bold', pad=12)
-        axes[0].set_xlabel("Score (0–1)", fontsize=10)
-        axes[0].set_xlim(0, 1.15)
-        axes[0].grid(True, axis='x', alpha=0.15, color='white')
-        axes[0].grid(False, axis='y')
 
-        for bar, (_, row) in zip(bars, sorted_df2.iterrows()):
-            axes[0].text(
-                bar.get_width() + 0.02,
-                bar.get_y() + bar.get_height() / 2,
-                f"{row['score']:.3f}",
-                va='center', ha='left',
-                fontsize=8, color='white'
+    # Matched materials — same family colors but bright with white ring
+    for family, group in sorted_df2.groupby('family'):
+        color = family_colors.get(family, '#888888')
+        axes[1].scatter(
+            group['density'],
+            group[chosen_column],
+            color=color,
+            s=160, alpha=0.95,
+            edgecolors='white',
+            linewidths=1.2,
+            zorder=3
+        )
+
+    # Labels for matched materials only
+    for _, row in sorted_df2.iterrows():
+        axes[1].annotate(
+            row['name'],
+            (row['density'], row[chosen_column]),
+            fontsize=7, ha='left',
+            xytext=(7, 4), textcoords='offset points',
+            color='white', fontweight='bold',
+            bbox=dict(
+                boxstyle='round,pad=0.2',
+                facecolor='#1a1a2e',
+                edgecolor='none',
+                alpha=0.7
             )
+        )
 
-        # Ashby chart
-        # family colors
-        family_colors = {
-            'Aluminum': '#4A90D9',
-            'Titanium': '#7B68EE',
-            'Steel': '#95A5A6',
-            'Superalloy': '#E74C3C',
-            'Composite': '#2ECC71',
-            'Specialty': '#F39C12'
-        }
+    axes[1].set_title(f"{ashby_prop} vs Density", fontsize=12, fontweight='bold', pad=12)
+    axes[1].set_xlabel("Density (g/cm³)", fontsize=10)
+    axes[1].set_ylabel(ashby_prop, fontsize=10)
+    axes[1].grid(True, alpha=0.1, color='white')
 
-        # background materials colored by family
-        for family, group in df.groupby('family'):
-            color = family_colors.get(family, '#888888')
-            axes[1].scatter(
-                group['density'],
-                group[chosen_column],
-                color=color,
-                s=60, alpha=0.4,
-                zorder=2,
-                label=family
-            )
+    # Legend — one entry per family
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w',
+            markerfacecolor=family_colors.get(f, '#888888'),
+            markersize=7, label=f)
+        for f in sorted(df['family'].unique())
+    ]
+    # Add a separator entry for matched vs unmatched
+    legend_elements += [
+        Line2D([0], [0], marker='o', color='w',
+            markerfacecolor='white', markersize=7,
+            markeredgecolor='white', alpha=0.3,
+            label='── dim = all  |  bright = matched')
+    ]
+    axes[1].legend(
+        handles=legend_elements,
+        fontsize=8,
+        facecolor='#1a1a2e',
+        edgecolor='#333333',
+        labelcolor='white',
+        title='Material Family',
+        title_fontsize=8,
+        loc='upper right'
+    )
 
-        # overlay matched materials colored by family (highlighted)
-        for family, group in sorted_df2.groupby('family'):
-            color = family_colors.get(family, '#888888')
-            axes[1].scatter(
-                group['density'],
-                group[chosen_column],
-                color=color,
-                s=150, alpha=0.95,
-                edgecolors='white',
-                linewidths=1.5,
-                zorder=3
-            )
-
-        # annotations loop
-        for _, row in sorted_df2.iterrows():
-            axes[1].annotate(
-                row['name'],
-                (row['density'], row[chosen_column]),
-                fontsize=7, ha='left',
-                xytext=(7, 4), textcoords='offset points',
-                color='white', fontweight='bold',
-                bbox=dict(boxstyle='round,pad=0.2',
-                          facecolor='#1a1a2e',
-                          edgecolor='none', alpha=0.7)
-            )
-
-        axes[1].set_title(f"{ashby_prop} vs Density", fontsize=12, fontweight='bold', pad=12)
-        axes[1].set_xlabel("Density (g/cm³)", fontsize=10)
-        axes[1].set_ylabel(ashby_prop, fontsize=10)
-        axes[1].grid(True, alpha=0.1, color='white')
-
-        # legend
-        legend_elements = [
-            Line2D([0], [0], marker='o', color='w',
-                   markerfacecolor=family_colors.get(f, '#888888'),
-                   markersize=7, label=f)
-            for f in df['family'].unique()
-        ]
-        axes[1].legend(handles=legend_elements, fontsize=8,
-                       facecolor='#1a1a2e', edgecolor='#333333',
-                       labelcolor='white', title='Family',
-                       title_fontsize=8)
-
-       
-        plt.tight_layout(pad=2.0)
-        st.pyplot(figure)
-        plt.close(figure)
+plt.tight_layout(pad=2.0)
+st.pyplot(figure)
+plt.close(figure)
 
 # TAB 3 — Full database
 with tab3:
