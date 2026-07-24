@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import pandas as pd
 import streamlit as st
-from fpdf import FPDF
 
 st.set_page_config(page_title="AeroMat", layout="wide")
 st.title("AeroMat — Aerospace Material Selection Tool")
