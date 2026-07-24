@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import pandas as pd
 import streamlit as st
+from fpdf import FPDF
 
 st.set_page_config(page_title="AeroMat", layout="wide")
 st.title("AeroMat — Aerospace Material Selection Tool")
@@ -11,7 +12,7 @@ df = pd.read_csv("materials.csv")
 df["specific_strength"] = (df["yield_strength"] / df["density"]).round(1)
 df["specific_stiffness"] = (df["elastic_modulus"] / df["density"]).round(1)
 
-tab1, tab2, tab3 = st.tabs(["Match by Target", "Filter & Rank", "Materials Database"])
+tab1, tab2, tab3, tab4 = st.tabs(["Match by Target", "Filter & Rank", "Application Case Studies", "Materials Database"])
 
 # TAB 1 — Match by Target
 with tab1:
@@ -301,7 +302,12 @@ with tab2:
         st.pyplot(figure)
         plt.close(figure)
 
-# TAB 3 — Full database
+# TAB 3 - Application Examples
 with tab3:
+    st.subheader("Application Examples")
+    st.caption("Various application scenarios and design decisions supported and validated.")
+    
+# TAB 4 — Full database
+with tab4:
     st.subheader("Materials Database")
     st.dataframe(df, use_container_width=True, hide_index=True)
