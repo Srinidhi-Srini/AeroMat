@@ -305,6 +305,19 @@ with tab2:
 with tab3:
     st.subheader("Application Examples")
     st.caption("Various application scenarios and design decisions supported and validated.")
+    st.divider()
+    with st.expander("Boeing 737 Fuselage", expanded=False, icon=None):
+        st.write("The fuselage is the main body of an aircraft and is what holds any crew and passengers. " \
+        "It undergoes pressurization cycles every flight, almost thousands of times through a 20-30 year service life." \
+        "The most dominant mode of failure is fatigue cracking, so the material needs to resist crack propagation. " \
+        "Weight matters as every kilogram of structure, is one less kilogram of payload. Service temperature is mild," \
+        "as most commerical cruise altitudes stay well below 100 C.")
+        st.write("**Requirements entered into Aeromat's Filter & Rank Tool:**")
+        st.write("**Max Density:** 3.5 g/cm³ (lightweight, no heavy alloys)")
+        st.write("**Minimum Yield Strength:** 250 MPa (the max stresses typically faced during pressurization cycles)")
+        st.write("**Service Temperature:** 80 C (mild thermal environment)")
+        st.write("**Weight scoring:** specific strength 70%, specific stiffness 30% (fatigue and weight dominate)")
+        
     
 # TAB 4 — Full database
 with tab4:
