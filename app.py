@@ -313,10 +313,10 @@ with tab3:
         "Weight matters as every kilogram of structure, is one less kilogram of payload. Service temperature is mild," \
         "as most commerical cruise altitudes stay well below 100 C.")
         st.write("**Requirements entered into Aeromat's Filter & Rank Tool:**")
-        st.write("**Max Density:** 3.5 g/cm³ (lightweight, no heavy alloys)")
-        st.write("**Minimum Yield Strength:** 250 MPa (the max stresses typically faced during pressurization cycles)")
-        st.write("**Service Temperature:** 80 C (mild thermal environment)")
-        st.write("**Weight scoring:** specific strength 70%, specific stiffness 30% (fatigue and weight dominate)")
+        st.write("**Max Density:** 3.5 g/cm³ (lightweight, no heavy alloys)"
+        "**Minimum Yield Strength:** 250 MPa (the max stresses typically faced during pressurization cycles)"
+        "**Service Temperature:** 80 C (mild thermal environment)"
+        "**Weight scoring:** specific strength 70%, specific stiffness 30% (fatigue and weight dominate)")
         
     
 # TAB 4 — Full database
