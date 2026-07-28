@@ -305,20 +305,61 @@ with tab2:
 with tab3:
     st.subheader("Application Examples")
     st.caption("Various application scenarios and design decisions supported and validated.")
-    st.divider()
-    with st.expander("Boeing 737 Fuselage", expanded=False, icon=None):
-        st.write("The fuselage is the main body of an aircraft and is what holds any crew and passengers. " \
-        "It undergoes pressurization cycles every flight, almost thousands of times through a 20-30 year service life. " \
-        "The most dominant mode of failure is fatigue cracking, so the material needs to resist crack propagation. " \
-        "Weight matters as every kilogram of structure, is one less kilogram of payload. Service temperature is mild," \
-        "as most commerical cruise altitudes stay well below 100 C.")
-        st.write("**Requirements entered into Aeromat's Filter & Rank Tool:**")
-        st.markdown(
-            "**Max Density:** 3.5 g/cm³ (lightweight, no heavy alloys)  \n"
-            "**Minimum Yield Strength:** 250 MPa (the max stresses typically faced during pressurization cycles)  \n"
-            "**Service Temperature:** 80 C (mild thermal environment)  \n"
-            "**Weight scoring:** specific strength 70%, specific stiffness 30% (fatigue and weight dominate)"
-        )
+    with st.expander("Boeing 737 Fuselage Skin"):
+        st.markdown("**Application**")
+        st.write("""
+        The Boeing 737 fuselage skin undergoes pressurization and depressurization 
+        on every flight cycle as it expands at cruise altitude and contracts on 
+        landing, tens of thousands of times over a 20-30 year service life. 
+        The dominant failure mode is fatigue cracking, not static overload. 
+        Minimum requirements are low density, adequate yield strength, and mild 
+        thermal performance since commercial cruise skin temperatures remain 
+        well under 100°C.
+        """)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Requirements entered into AeroMat**")
+            st.markdown("""
+            - Maximum density: 3.5 g/cm³  
+            - Minimum yield strength: 250 MPa  
+            - Minimum service temperature: 80°C  
+            - Scoring: specific strength 70%, specific stiffness 30%
+            """)
+        with col2:
+            st.markdown("**Selection comparison**")
+            st.markdown("""
+            - 🥇 Al 7068-T6511  
+            - 🥈 Al 2024-T3  
+            - 🥉 Al 7075-T6
+            - ✅ Boeing actual: Al 2024-T3
+            """)
+
+        st.image("boeing737.png",
+                caption="AeroMat Filter & Rank Boeing 737 Output")
+
+        st.markdown("**Analysis**")
+        st.write("""
+        AeroMat correctly identifies aluminum alloys as the optimal material 
+        family. However the tool ranks Al 7068-T6511 above Al 2024-T3 because 7068 has a higher yield strength 
+        (683 MPa vs 345 MPa) at nearly identical density (2.9 vs 2.8), giving it a superior 
+        specific strength score.
+
+        Boeing's selection of 2024-T3 reveals a key limitation of the current 
+        tool: fracture toughness and fatigue crack growth rate are not included 
+        in the database. Al 2024-T3 has significantly better fracture toughness 
+        and slower fatigue crack propagation than the 7000-series 
+        alloys, making it preferred for pressurized fuselage skin 
+        where fatigue is the primary failure mode.
+
+        AeroMat correctly identifies the material family but does not capture 
+        fatigue-critical selection criteria. Fracture toughness (K_IC, MPa√m) 
+        is identified as a high-priority property addition in a future database 
+        update.
+        """)
+
+        st.info("💡 This case study highlights that material selection for fatigue-critical applications requires fracture mechanics data beyond strength and stiffness indices alone.")
+
         
     
 # TAB 4 — Full database
