@@ -165,7 +165,7 @@ with tab2:
                 'score': 'Score'
             }).style.format({
                 'Score': '{:.3f}',
-                'Density (g/cm³)': '{:.1f}',
+                'Density (g/cm³)': '{:.2f}',
                 'Elastic Modulus (GPa)': '{:.1f}',
                 'Thermal Cond. (W/m·K)': '{:.1f}',
                 'Sp. Strength': '{:.1f}',
@@ -301,9 +301,9 @@ with tab2:
         st.pyplot(figure)
         plt.close(figure)
 
-# TAB 3 - Application Examples
+# TAB 3 - Application Case Studies
 with tab3:
-    st.subheader("Application Examples")
+    st.subheader("Application Case Studies")
     st.caption("Various application scenarios and design decisions supported and validated.")
     with st.expander("Boeing 737 Fuselage Skin"):
         st.markdown("**Application**")
