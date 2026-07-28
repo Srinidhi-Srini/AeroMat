@@ -335,8 +335,8 @@ with tab3:
             - ✅ Boeing actual: Al 2024-T3
             """)
 
-        st.image("boeing737.png",
-                caption="AeroMat Filter & Rank Boeing 737 Output")
+        st.image("case_studies/boeing737.png",
+                caption="AeroMat Filter & Rank output — Boeing 737")
 
         st.markdown("**Analysis**")
         st.write("""
