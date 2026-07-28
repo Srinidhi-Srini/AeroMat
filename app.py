@@ -336,7 +336,7 @@ with tab3:
             """)
 
         st.image("case_studies/boeing737.png",
-                caption="AeroMat Filter & Rank output — Boeing 737")
+                caption="AeroMat Filter & Rank output — Boeing 737 Fuselage")
 
         st.markdown("**Analysis**")
         st.write("""
@@ -360,6 +360,67 @@ with tab3:
 
         st.info("💡 This case study highlights that material selection for fatigue-critical applications requires fracture mechanics data beyond strength and stiffness indices alone.")
 
+
+    with st.expander("Airbus A320 Landing Gear"):
+        st.markdown("**Application**")
+        st.write("""
+        The Airbus A320 main landing gear absorbs the full impact load of a 
+        79,000 kg aircraft on every landing, while surviving tens of thousands of 
+        flight cycles over a 20-30 year service life. The dominant design requirements 
+        are extreme yield strength to resist plastic deformation under impact loads, 
+        high fatigue resistance for cyclic loading, and adequate toughness to prevent 
+        brittle fracture. As for density, the landing gear represents 
+        a small fraction of total aircraft weight and strength takes absolute priority.
+        The gear operates at moderate temperatures so thermal performance is not high priority.
+        """)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Requirements entered into AeroMat**")
+            st.markdown("""
+            - Maximum density: 9.0 g/cm³
+            - Minimum yield strength: 1,400 MPa
+            - Minimum service temperature: 150°C
+            - Scoring: specific strength 60%, specific stiffness 40%
+            """)
+        with col2:
+            st.markdown("**Selection comparison**")
+            st.markdown("""
+            - 🥇 300M Steel  
+            - 🥈 AerMet 100  
+            - 🥉 4340 Steel (HT)
+            - ✅ Airbus actual: 35NCD16 steel (equivalent to 4340 HT)
+            """)
+
+        st.image("case_studies/airbusa320.png",
+                caption="AeroMat Filter & Rank output — Airbus A320 main landing gear")
+
+        st.markdown("**Analysis**")
+        st.write("""
+        AeroMat correctly identifies ultra-high strength steels as the optimal 
+        material family. The current main 
+        fitting material on the A320 is 35NCD16 — a French designation for a 
+        nickel-chromium-molybdenum steel directly comparable to 4340 in the 
+        heat-treated condition, which AeroMat ranks third.
+
+        AeroMat ranks 300M Steel first due to its superior specific strength 
+        (yield strength 1,655 MPa at density 7.83 g/cm³). 300M is a modified 
+        4340 with silicon and vanadium additions specifically developed for 
+        landing gear applications and is widely used on Boeing and other Airbus 
+        programs.
+
+        AerMet 100 ranks second due to its combination of yield 
+        strength (1,700 MPa) and fracture toughness — a property not currently 
+        in AeroMat's database but critical for landing gear. In addition, AerMet 100 
+        is increasingly preferred over 300M for new landing gear designs precisely 
+        because of its superior toughness at equivalent strength levels.
+
+        The tool's ranking of 4340 HT third reflects its lower specific strength 
+        compared to 300M and AerMet 100, consistent with 35NCD16 being an older 
+        material selection that newer programs are actively replacing.
+        """)
+
+        st.info("💡 This case study demonstrates that AeroMat correctly identifies the material family and competitive candidates. Fracture toughness data would further refine rankings between 300M and AerMet 100 for fatigue-critical landing gear applications.")
         
     
 # TAB 4 — Full database
