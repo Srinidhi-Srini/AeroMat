@@ -79,7 +79,7 @@ with tab2:
         max_density = st.slider("Maximum Density (g/cm³)", 1.0, 25.0, 5.0, 0.1)
         min_yield_strength = st.slider("Minimum Yield Strength (MPa)", 0, 5000, 300, 25)
         min_service_temp = st.slider("Minimum Service Temperature (°C)", 0, 1500, 150, 25)
-        all_families = sorted([str(x) for x in df['family'].dropna().unique()])
+        all_families = sorted(df['family'].dropna().astype(str).unique().tolist())
         selected_families = st.multiselect(
             "Filter by Material Family",
             options = all_families,
